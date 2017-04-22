@@ -39,14 +39,30 @@
 }
 
 - (IBAction)item:(id)sender {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.15 target:self selector:@selector(timerEvent:) userInfo:nil repeats:YES];
+    //定时0.2秒截图一次，一定可以接到指定的10张图
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(timerEvent:) userInfo:nil repeats:YES];
 }
 
 - (void)timerEvent:(NSTimer *)timer{
     if (self.cutCount < kImageCount) {
+        
+//        dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//        // 创建一个分组，用来把一堆任务放到同一个分组里
+//        dispatch_group_t group = dispatch_group_create();
+//        dispatch_group_async(group, globalQueue, ^{
+//            
+//            for (int i=0; i<4; i++) {
+//                NSLog(@"任务1...");
+//                [NSThread sleepForTimeInterval:1.0f];
+//                
+//                NSLog(@"任务1:%@",[NSThread currentThread]);
+//            }
+//        });
         [self assetGetThumImageWithUrl:self.myUrl time:self.cutTime];
         self.cutCount ++;
         self.cutTime += self.videoDuration / kImageCount;
+       
+        
     } else {
         self.cutTime = 0;
         self.cutCount = 0;
