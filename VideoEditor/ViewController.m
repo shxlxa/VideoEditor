@@ -11,6 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "YYKit.h"
 #import "AppDelegate.h"
+#import "WMPlayer.h"
 
 #define kImageCount 8
 @interface ViewController ()
@@ -24,20 +25,30 @@
 @property (nonatomic, assign) NSInteger cutCount; //截图次数
 @property (nonatomic, assign) NSInteger videoDuration;
 
+@property (nonatomic, strong) WMPlayer  *wmPlayer;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    NSString *str = [[NSBundle mainBundle] pathForResource:@"Everytime" ofType:@"mp4"];
-    NSURL *url = [NSURL fileURLWithPath:str];
-    self.myUrl = url;
+   
+    self.navigationController.navigationBar.translucent = NO;
+    [self addPlayer];
     
     self.cutTime = 0.0;
     self.cutCount = 0;
-    self.videoDuration = [self getVideoDurationWithUrl:url];
+    self.videoDuration = [self getVideoDurationWithUrl:self.myUrl];
+}
+
+- (void)addPlayer{
+    CGRect rect = CGRectMake(0, 0, kScreenWidth, 300);
+    _wmPlayer = [[WMPlayer alloc]initWithFrame:rect];
+    NSString *urlstring = [self.myUrl absoluteString];
+    [_wmPlayer setURLString:urlstring];
+    [self.view addSubview:_wmPlayer];
+    [_wmPlayer play];
 }
 
 - (IBAction)item:(id)sender {
@@ -133,6 +144,14 @@
         _imageArr = [NSMutableArray array];
     }
     return _imageArr;
+}
+
+- (NSURL *)myUrl{
+    if (!_myUrl) {
+        NSString *str = [[NSBundle mainBundle] pathForResource:@"Everytime" ofType:@"mp4"];
+        _myUrl = [NSURL fileURLWithPath:str];
+    }
+    return _myUrl;
 }
 
 - (void)dealloc
