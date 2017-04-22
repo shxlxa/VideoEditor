@@ -120,6 +120,7 @@
 		21ECA22E1EAB26FA00773792 /* video_drag_left@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ECA22A1EAB26FA00773792 /* video_drag_left@3x.png */; };
 		21ECA22F1EAB26FA00773792 /* video_drag_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ECA22B1EAB26FA00773792 /* video_drag_right@2x.png */; };
 		21ECA2301EAB26FA00773792 /* video_drag_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ECA22C1EAB26FA00773792 /* video_drag_right@3x.png */; };
+		21ECA2331EAB308500773792 /* ThumbnailTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ECA2321EAB308500773792 /* ThumbnailTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,6 +363,8 @@
 		21ECA22A1EAB26FA00773792 /* video_drag_left@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_drag_left@3x.png"; sourceTree = "<group>"; };
 		21ECA22B1EAB26FA00773792 /* video_drag_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_drag_right@2x.png"; sourceTree = "<group>"; };
 		21ECA22C1EAB26FA00773792 /* video_drag_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_drag_right@3x.png"; sourceTree = "<group>"; };
+		21ECA2311EAB308500773792 /* ThumbnailTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailTool.h; sourceTree = "<group>"; };
+		21ECA2321EAB308500773792 /* ThumbnailTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +425,8 @@
 				212924861EA9F7D700B063D2 /* Everytime.mp4 */,
 				212924561EA9E7B100B063D2 /* AppDelegate.h */,
 				212924571EA9E7B100B063D2 /* AppDelegate.m */,
+				21ECA2311EAB308500773792 /* ThumbnailTool.h */,
+				21ECA2321EAB308500773792 /* ThumbnailTool.m */,
 				212924591EA9E7B100B063D2 /* ViewController.h */,
 				2129245A1EA9E7B100B063D2 /* ViewController.m */,
 				2129245C1EA9E7B100B063D2 /* Main.storyboard */,
@@ -987,6 +992,7 @@
 				21C2E3E71EAAF43E00C44ECB /* NSData+YYAdd.m in Sources */,
 				21C2E40E1EAAF43E00C44ECB /* YYImage.m in Sources */,
 				21C2E41A1EAAF43E00C44ECB /* YYTextKeyboardManager.m in Sources */,
+				21ECA2331EAB308500773792 /* ThumbnailTool.m in Sources */,
 				21C2E3FE1EAAF43E00C44ECB /* UIScreen+YYAdd.m in Sources */,
 				21C2E4101EAAF43E00C44ECB /* YYImageCoder.m in Sources */,
 				21C2E4211EAAF43E00C44ECB /* UIPasteboard+YYText.m in Sources */,
