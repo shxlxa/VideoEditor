@@ -12,7 +12,7 @@
 #import "YYKit.h"
 #import "AppDelegate.h"
 
-#define kImageCount 10
+#define kImageCount 8
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *thImageView;
 
@@ -41,25 +41,29 @@
 }
 
 - (IBAction)item:(id)sender {
+        dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        // 创建一个分组，用来把一堆任务放到同一个分组里
+        dispatch_group_t group = dispatch_group_create();
+        dispatch_group_async(group, globalQueue, ^{
+
+            for (int i=0; i<kImageCount; i++) {
+                [self assetGetThumImageWithUrl:self.myUrl time:self.cutTime];
+                self.cutCount ++;
+                self.cutTime += self.videoDuration / kImageCount;
+                NSLog(@"i %d",i);
+                if (i >= kImageCount-1) {
+                    self.cutTime = 0;
+                    self.cutCount = 0;
+                }
+            }
+        });
+    
     //定时0.2秒截图一次，一定可以接到指定的10张图
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerEvent:) userInfo:nil repeats:YES];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerEvent:) userInfo:nil repeats:YES];
 }
 
 - (void)timerEvent:(NSTimer *)timer{
     if (self.cutCount < kImageCount) {
-        
-//        dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//        // 创建一个分组，用来把一堆任务放到同一个分组里
-//        dispatch_group_t group = dispatch_group_create();
-//        dispatch_group_async(group, globalQueue, ^{
-//            
-//            for (int i=0; i<4; i++) {
-//                NSLog(@"任务1...");
-//                [NSThread sleepForTimeInterval:1.0f];
-//                
-//                NSLog(@"任务1:%@",[NSThread currentThread]);
-//            }
-//        });
         [self assetGetThumImageWithUrl:self.myUrl time:self.cutTime];
         self.cutCount ++;
         self.cutTime += self.videoDuration / kImageCount;
@@ -68,7 +72,6 @@
         self.cutTime = 0;
         self.cutCount = 0;
         [self.timer invalidate];
-        
         NSLog(@"imagecount:%ld",self.imageArr.count);
     }
 }
@@ -107,7 +110,11 @@
     imageGenerator.appliesPreferredTrackTransform = YES;    // 截图的时候调整到正确的方向
     UIImageWriteToSavedPhotosAlbum(image,nil, nil,nil);
     CGImageRelease(cgImage);
-    self.thImageView.image = image;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.thImageView.image = image;
+    });
+   
+    
     if (image) {
         [self.imageArr addObject:image];
         
