@@ -121,6 +121,7 @@
 		21ECA22F1EAB26FA00773792 /* video_drag_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ECA22B1EAB26FA00773792 /* video_drag_right@2x.png */; };
 		21ECA2301EAB26FA00773792 /* video_drag_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21ECA22C1EAB26FA00773792 /* video_drag_right@3x.png */; };
 		21ECA2331EAB308500773792 /* ThumbnailTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ECA2321EAB308500773792 /* ThumbnailTool.m */; };
+		21ECA2381EAB600D00773792 /* Temp.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ECA2371EAB600D00773792 /* Temp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -365,6 +366,8 @@
 		21ECA22C1EAB26FA00773792 /* video_drag_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_drag_right@3x.png"; sourceTree = "<group>"; };
 		21ECA2311EAB308500773792 /* ThumbnailTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailTool.h; sourceTree = "<group>"; };
 		21ECA2321EAB308500773792 /* ThumbnailTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailTool.m; sourceTree = "<group>"; };
+		21ECA2361EAB600D00773792 /* Temp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Temp.h; sourceTree = "<group>"; };
+		21ECA2371EAB600D00773792 /* Temp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Temp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,6 +432,8 @@
 				21ECA2321EAB308500773792 /* ThumbnailTool.m */,
 				212924591EA9E7B100B063D2 /* ViewController.h */,
 				2129245A1EA9E7B100B063D2 /* ViewController.m */,
+				21ECA2361EAB600D00773792 /* Temp.h */,
+				21ECA2371EAB600D00773792 /* Temp.m */,
 				2129245C1EA9E7B100B063D2 /* Main.storyboard */,
 				2129245F1EA9E7B100B063D2 /* Assets.xcassets */,
 				212924611EA9E7B100B063D2 /* LaunchScreen.storyboard */,
@@ -1035,6 +1040,7 @@
 				21C2E4161EAAF43E00C44ECB /* YYTextContainerView.m in Sources */,
 				21C2E4301EAAF43E00C44ECB /* YYSentinel.m in Sources */,
 				21C2E4141EAAF43E00C44ECB /* NSObject+YYModel.m in Sources */,
+				21ECA2381EAB600D00773792 /* Temp.m in Sources */,
 				21C2E3F01EAAF43E00C44ECB /* NSString+YYAdd.m in Sources */,
 				21C2E4111EAAF43E00C44ECB /* YYSpriteSheetImage.m in Sources */,
 				21C2E4131EAAF43E00C44ECB /* YYWebImageOperation.m in Sources */,

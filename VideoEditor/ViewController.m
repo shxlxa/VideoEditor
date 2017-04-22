@@ -124,35 +124,28 @@
 }
 
 - (void)leftPanGestureEvent:(UIPanGestureRecognizer *)panGesture{
+    CGPoint point = [panGesture translationInView:self.view];
     
-    if (panGesture.state == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration:0.25 animations:^{
-//            _leftDragImg.centerY = _containView.centerY;
-        } completion:nil];
-    }
-    else if (panGesture.state == UIGestureRecognizerStateBegan) {
-        CGPoint location = [panGesture locationInView:self.view];
-        // CGRectContainsPoint 判断一个点是不是在一个矩形里面
-        CGRect absoluteFrame = CGRectMake(_leftDragImg.left+_containView.left, _leftDragImg.top+_containView.top, _leftDragImg.width, _leftDragImg.height);
-        if (CGRectContainsPoint(absoluteFrame, location)) {
+//    if (_leftDragImg.left>=0 && _leftDragImg.left<=310) {
+//        [_leftDragImg setCenter:CGPointMake(_leftDragImg.center.x + point.x, _leftDragImg.center.y)];
+//        NSLog(@"x:%.2f",_leftDragImg.left);
+//        [panGesture setTranslation:CGPointMake(0, 0) inView:self.view];
+//    }
+    if (panGesture.state == UIGestureRecognizerStateBegan) {
+        if (_leftDragImg.left>=0 && _leftDragImg.left<=310) {
             _canMove = YES;
-        }
-        else {
+        } else {
             _canMove = NO;
         }
-    }
-    else {
-        // 相对于指定的View的偏移
-        // 与原始位置的差值
-        CGPoint point = [panGesture translationInView:self.view];
-        //        CGPoint location = [panGesture locationInView:self.view];
-        if (_canMove) {
-//            _
-            [_leftDragImg mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_containView).offset(point.x);
-            }];
+        
+    }else if (panGesture.state == UIGestureRecognizerStateChanged){
+        if (_canMove && _leftDragImg.left>=0 && _leftDragImg.left<=310) {
+            [_leftDragImg setCenter:CGPointMake(_leftDragImg.center.x + point.x, _leftDragImg.center.y)];
+            NSLog(@"x:%.2f",_leftDragImg.left);
+            [panGesture setTranslation:CGPointMake(0, 0) inView:self.view];
         }
     }
+   
 }
 
 //0xed5848
