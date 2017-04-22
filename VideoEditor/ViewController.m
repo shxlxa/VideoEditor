@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "YYKit.h"
+#import "AppDelegate.h"
 
 #define kImageCount 10
 @interface ViewController ()
@@ -40,7 +42,7 @@
 
 - (IBAction)item:(id)sender {
     //定时0.2秒截图一次，一定可以接到指定的10张图
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(timerEvent:) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerEvent:) userInfo:nil repeats:YES];
 }
 
 - (void)timerEvent:(NSTimer *)timer{
@@ -61,7 +63,6 @@
         [self assetGetThumImageWithUrl:self.myUrl time:self.cutTime];
         self.cutCount ++;
         self.cutTime += self.videoDuration / kImageCount;
-       
         
     } else {
         self.cutTime = 0;
@@ -103,11 +104,19 @@
     }
     CMTimeShow(actucalTime);
     UIImage *image = [UIImage imageWithCGImage:cgImage];
+    imageGenerator.appliesPreferredTrackTransform = YES;    // 截图的时候调整到正确的方向
     UIImageWriteToSavedPhotosAlbum(image,nil, nil,nil);
     CGImageRelease(cgImage);
     self.thImageView.image = image;
     if (image) {
         [self.imageArr addObject:image];
+        
+        NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        filePath = [filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%ld.png",self.cutCount]];
+        BOOL result = [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
+        if (result) {
+            NSLog(@"filePath:%@",filePath);
+        }
     }
     NSLog(@"视频截取成功");
 }
