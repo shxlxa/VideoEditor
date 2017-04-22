@@ -214,5 +214,8 @@ typedef NS_ENUM(NSUInteger,WMControlType) {
 - (NSString *)version;
 //获取当前的旋转状态
 +(CGAffineTransform)getCurrentDeviceOrientation;
+
+
+- (void)seekToTimeToPlay:(double)time;
 @end
 
