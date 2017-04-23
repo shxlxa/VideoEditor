@@ -70,7 +70,7 @@
     NSString *urlstring = [self.myUrl absoluteString];
     [_wmPlayer setURLString:urlstring];
     [self.view addSubview:_wmPlayer];
-    [_wmPlayer play];
+    [_wmPlayer pause];
     [_wmPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
         make.height.mas_equalTo(9*kScreenWidth/16.0);
@@ -78,16 +78,16 @@
 }
 
 - (void)addImageViews{
-    UIView *containView = [[UIView alloc] init];
-    [self.view addSubview:containView];
-    containView.backgroundColor = [UIColor lightGrayColor];
-    self.containView = containView;
-    [containView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_wmPlayer.mas_bottom).offset(50);
-        make.centerX.equalTo(self.view);
-        make.width.mas_equalTo(340);
-        make.height.mas_equalTo(42);
-    }];
+    self.containView = [[UIView alloc] init];
+    [self.view addSubview:self.containView];
+    self.containView.backgroundColor = [UIColor lightGrayColor];
+//    [containView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_wmPlayer.mas_bottom).offset(50);
+//        make.centerX.equalTo(self.view);
+//        make.width.mas_equalTo(340);
+//        make.height.mas_equalTo(42);
+//    }];
+    self.containView.frame = CGRectMake(50, 300, 100, 42);
     
     for (int i=0; i<kImageCount; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -101,50 +101,37 @@
     _leftDragImg = [[UIImageView alloc] init];
     _leftDragImg.image = [UIImage imageNamed:@"video_drag_left"];
     _leftDragImg.userInteractionEnabled = YES;
-    [containView addSubview:_leftDragImg];
+    [self.containView addSubview:_leftDragImg];
     [_leftDragImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.left.equalTo(containView);
+        make.top.bottom.left.equalTo(self.containView);
         make.width.mas_equalTo(15);
     }];
     
     _rightDragImg = [[UIImageView alloc] init];
     _rightDragImg.image = [UIImage imageNamed:@"video_drag_right"];
     _rightDragImg.userInteractionEnabled = YES;
-    [containView addSubview:_rightDragImg];
+    [self.containView addSubview:_rightDragImg];
     [_rightDragImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.right.equalTo(containView);
+        make.top.bottom.right.equalTo(self.containView);
         make.width.mas_equalTo(15);
     }];
     
     _leftPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(leftPanGestureEvent:)];
-    [_leftDragImg addGestureRecognizer:_leftPanGesture];
+    [_containView addGestureRecognizer:_leftPanGesture];
     
-    _rightPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(rightPanGestureEvent:)];
-    [_rightDragImg addGestureRecognizer:_rightPanGesture];
+//    _rightPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(rightPanGestureEvent:)];
+//    [_rightDragImg addGestureRecognizer:_rightPanGesture];
 }
 
 - (void)leftPanGestureEvent:(UIPanGestureRecognizer *)panGesture{
     CGPoint point = [panGesture translationInView:self.view];
-    
-//    if (_leftDragImg.left>=0 && _leftDragImg.left<=310) {
-//        [_leftDragImg setCenter:CGPointMake(_leftDragImg.center.x + point.x, _leftDragImg.center.y)];
-//        NSLog(@"x:%.2f",_leftDragImg.left);
-//        [panGesture setTranslation:CGPointMake(0, 0) inView:self.view];
-//    }
-    if (panGesture.state == UIGestureRecognizerStateBegan) {
-        if (_leftDragImg.left>=0 && _leftDragImg.left<=310) {
-            _canMove = YES;
-        } else {
-            _canMove = NO;
-        }
-        
-    }else if (panGesture.state == UIGestureRecognizerStateChanged){
-        if (_canMove && _leftDragImg.left>=0 && _leftDragImg.left<=310) {
-            [_leftDragImg setCenter:CGPointMake(_leftDragImg.center.x + point.x, _leftDragImg.center.y)];
-            NSLog(@"x:%.2f",_leftDragImg.left);
-            [panGesture setTranslation:CGPointMake(0, 0) inView:self.view];
-        }
-    }
+    CGPoint newCenter = CGPointMake(panGesture.view.center.x + point.x,panGesture.view.center.y);
+    newCenter.x = MAX(panGesture.view.frame.size.width/2, newCenter.x);
+    newCenter.x = MIN(kScreenWidth-panGesture.view.frame.size.width/2, newCenter.x);
+    panGesture.view.center = newCenter;
+//    [_containView setCenter:CGPointMake(_containView.center.x + point.x, _containView.center.y)];
+    NSLog(@"x:%.2f",_containView.centerX);
+    [panGesture setTranslation:CGPointMake(0, 0) inView:self.view];
    
 }
 
