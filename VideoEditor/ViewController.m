@@ -81,13 +81,12 @@
     self.containView = [[UIView alloc] init];
     [self.view addSubview:self.containView];
     self.containView.backgroundColor = [UIColor lightGrayColor];
-//    [containView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_wmPlayer.mas_bottom).offset(50);
-//        make.centerX.equalTo(self.view);
-//        make.width.mas_equalTo(340);
-//        make.height.mas_equalTo(42);
-//    }];
-    self.containView.frame = CGRectMake(50, 300, 100, 42);
+    [self.containView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_wmPlayer.mas_bottom).offset(50);
+        make.centerX.equalTo(self.view);
+        make.width.mas_equalTo(340);
+        make.height.mas_equalTo(42);
+    }];
     
     for (int i=0; i<kImageCount; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -117,21 +116,20 @@
     }];
     
     _leftPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(leftPanGestureEvent:)];
-    [_containView addGestureRecognizer:_leftPanGesture];
+    [_leftDragImg addGestureRecognizer:_leftPanGesture];
     
 //    _rightPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(rightPanGestureEvent:)];
 //    [_rightDragImg addGestureRecognizer:_rightPanGesture];
 }
 
 - (void)leftPanGestureEvent:(UIPanGestureRecognizer *)panGesture{
-    CGPoint point = [panGesture translationInView:self.view];
+    CGPoint point = [panGesture translationInView:self.containView];
     CGPoint newCenter = CGPointMake(panGesture.view.center.x + point.x,panGesture.view.center.y);
     newCenter.x = MAX(panGesture.view.frame.size.width/2, newCenter.x);
-    newCenter.x = MIN(kScreenWidth-panGesture.view.frame.size.width/2, newCenter.x);
+    newCenter.x = MIN(self.containView.width-15-panGesture.view.frame.size.width/2, newCenter.x);
     panGesture.view.center = newCenter;
-//    [_containView setCenter:CGPointMake(_containView.center.x + point.x, _containView.center.y)];
     NSLog(@"x:%.2f",_containView.centerX);
-    [panGesture setTranslation:CGPointMake(0, 0) inView:self.view];
+    [panGesture setTranslation:CGPointMake(0, 0) inView:self.containView];
    
 }
 
